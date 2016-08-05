@@ -19,3 +19,6 @@ The taxes will automatically be paid and reset when you visit the guildbank.
 
 v1.12:
 - added /settax total
+
+v1.13
+- I'm back! / Updated Interface version
