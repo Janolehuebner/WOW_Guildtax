@@ -1,3 +1,6 @@
+
+
+-- ####################################core################################
 local frame = CreateFrame("FRAME");
 frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 frame:RegisterEvent("GUILDBANKFRAME_OPENED"); 
@@ -29,6 +32,28 @@ if GetLocale() == "deDE" then
  L["totalpaid"] = "Paid to guild in total: ";
 end
 -- ##########################################################################################
+
+function janolehuebner_GuildTax_topay()
+local newgold = GetMoney() 
+
+	
+	local dif = newgold - lastgold
+
+         if dif > 0 then
+			local taxresult = dif * (taxrate/100)
+			
+			local topay = ceil(taxresult)
+			return topay/10000;
+	      else
+		  return 0;
+			
+		 end
+
+
+end
+
+
+
 local function eventHandler(self, event, ...)
      
 	 
@@ -43,6 +68,7 @@ local function eventHandler(self, event, ...)
          
 		  taxrate = 10
         end
+		janolehuebner_GuildTax_updateUI("LOADED");
 
     end
 
@@ -88,20 +114,16 @@ local function handler(msg, editbox)
  elseif msg == 'total' then
  print( L["totalpaid"].." "  .. totalgold/10000 .. L["gold"]  );
   elseif msg == 'topay' then
- 	local newgold = GetMoney() 
-
+ 	local tp=janolehuebner_GuildTax_topay()
+	if tp == 0 then
+	print (L["taxtopay"] .. " " .. taxrate .. "%: ".. L["nothing"]);
+	else
+	print (L["taxtopay"] .. " " .. taxrate .. "%:  ".. tp/10000 .. " ".. L["gold"] )
+	end
 	
-	local dif = newgold - lastgold
-
-         if dif > 0 then
-			local taxresult = dif * (taxrate/100)
-			
-			local topay = ceil(taxresult)
-			print (L["taxtopay"] .. " " .. taxrate .. "%:  ".. topay/10000 .. " ".. L["gold"] )
-	      else
-		  print (L["taxtopay"] .. " " .. taxrate .. "%: ".. L["nothing"] )
-			
-		 end
+	 elseif msg == 'open' then
+	janolehuebner_GuildTax_updateUI("OPEN");
+	
  else
 
  local check = tonumber(msg)
@@ -115,21 +137,8 @@ local function handler(msg, editbox)
  
  
  end
+ janolehuebner_GuildTax_updateUI("CONSOLE");
 end
 SlashCmdList["SETTAX"] = handler; 
--- #######################################-PEPE- just a joke ;D -#####################
-SLASH_PEPE1 = '/pepe';
-local function pepehandler(msg, editbox)
- if msg == 'isttoll' then
 
- elseif msg == 'knuddel' then
- message('Pepe knuddelt zurück!');
- else
-
-message("Piep, Piep, Piep - Pepe hat dich lieb!")
- 
- 
- end
-end
-SlashCmdList["PEPE"] = pepehandler;
 
