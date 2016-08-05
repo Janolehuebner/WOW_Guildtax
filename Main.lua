@@ -1,7 +1,7 @@
-local frame = CreateFrame("FRAME"); -- Need a frame to respond to events
-frame:RegisterEvent("PLAYER_ENTERING_WORLD"); -- Fired when saved variables are loaded
-frame:RegisterEvent("GUILDBANKFRAME_OPENED"); -- Fired when saved variables are loaded
-frame:RegisterEvent("GUILDBANKFRAME_CLOSED"); -- Fired when saved variables are loaded
+local frame = CreateFrame("FRAME");
+frame:RegisterEvent("PLAYER_ENTERING_WORLD");
+frame:RegisterEvent("GUILDBANKFRAME_OPENED"); 
+frame:RegisterEvent("GUILDBANKFRAME_CLOSED");
 -- #########################################################################################
 local function defaultFunc(L, key)
  return key;
@@ -17,6 +17,7 @@ if GetLocale() == "deDE" then
  L["nothing"] = "NICHTS";
  L["newrate"] = "Neue Steuerrate:";
  L["ratefail"] = "Die Rate muss eine Zahl zwischen 0 und 100 sein!";
+ L["totalpaid"] = "Gesamt an Gilde gezahlt:";
  else
  L["taxreset"] = "Still-to-be-paid taxes reset!";
  L["currentrate"] = "Taxrate:";
@@ -25,7 +26,7 @@ if GetLocale() == "deDE" then
  L["nothing"] = "NOTHING";
  L["newrate"] = "New taxrate:";
  L["ratefail"] = "The rate has to be a number between 0 and 100!!";
- 
+ L["totalpaid"] = "Paid to guild in total: ";
 end
 -- ##########################################################################################
 local function eventHandler(self, event, ...)
@@ -33,8 +34,10 @@ local function eventHandler(self, event, ...)
 	 
 	if event == "PLAYER_ENTERING_WORLD" then
         if lastgold == nil then
-  
 		  lastgold = GetMoney()
+        end
+		if totalgold == nil then
+		  totalgold = 0
         end
 		 if taxrate == nil then
          
@@ -56,7 +59,7 @@ local function eventHandler(self, event, ...)
 			local topay = ceil(taxresult)
 
 			DepositGuildBankMoney(topay)
-	
+	        totalgold = totalgold + topay
 		
 
 			
@@ -82,6 +85,8 @@ local function handler(msg, editbox)
   lastgold = GetMoney()
  elseif msg == 'getrate' then
  print( L["currentrate"].." "  .. taxrate.."%");
+ elseif msg == 'total' then
+ print( L["totalpaid"].." "  .. totalgold/10000 .. L["gold"]  );
   elseif msg == 'topay' then
  	local newgold = GetMoney() 
 
@@ -111,4 +116,20 @@ local function handler(msg, editbox)
  
  end
 end
-SlashCmdList["SETTAX"] = handler; -- Also a valid assignment strategy
+SlashCmdList["SETTAX"] = handler; 
+-- #######################################-PEPE- just a joke ;D -#####################
+SLASH_PEPE1 = '/pepe';
+local function pepehandler(msg, editbox)
+ if msg == 'isttoll' then
+
+ elseif msg == 'knuddel' then
+ message('Pepe knuddelt zurück!');
+ else
+
+message("Piep, Piep, Piep - Pepe hat dich lieb!")
+ 
+ 
+ end
+end
+SlashCmdList["PEPE"] = pepehandler;
+
