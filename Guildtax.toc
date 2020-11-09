@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 90001
 ## Title: Guildtax
 ## Author: Jan-Ole Hübner
 ## Version: 1.20
