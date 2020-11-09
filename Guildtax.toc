@@ -1,7 +1,7 @@
 ## Interface: 90001
 ## Title: Guildtax
 ## Author: Jan-Ole Hübner
-## Version: 1.20
+## Version: 1.2.1
 ## Notes: Allows you to set a taxrate for the guild so you don't have to keep an eye on how much you earned. The taxrate is adjustable for every character.
 ## Notes-deDE: Ermöglicht es eine Steuerrate für die Gilde zu setzen, damit man nicht auf den Verdienst achten muss. Die Steuerrate ist für jeden Charakter anpassbar.
 ## DefaultState: Enabled
